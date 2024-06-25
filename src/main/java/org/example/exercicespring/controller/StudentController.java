@@ -84,7 +84,7 @@ public class StudentController {
 
     @PostMapping("/search")
     public String searchStudent(@RequestParam("query") String query, Model model){
-        List<Student> students = studentService.getByName(query);
+        List<Student> students = studentService.getByFirstName(query);
         model.addAttribute("students", students);
         return "search_results";
     }

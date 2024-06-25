@@ -38,4 +38,10 @@ public class StudentService {
                         student.getLastName().toLowerCase().contains(name.toLowerCase()))
                 .toList();
     }
+
+    public List<Student> getByFirstName(String firstName) {
+        return students.values().stream()
+                .filter(student -> student.getFirstName().toLowerCase().contains(firstName.toLowerCase()))
+                .toList();
+    }
 }
