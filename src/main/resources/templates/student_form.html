@@ -10,7 +10,8 @@
 <h1>Student Form</h1>
 <a th:href="@{/}" class="btn btn-primary">Home</a>
 
-<form th:action="@{/students}" th:object="${student}" method="post" class="mt-3">
+<form th:action="@{/students/update/{id}(id=${student.id})}" th:object="${student}" method="post" class="mt-3">
+    <input type="hidden" name="_method" value="put" />
     <div class="form-group">
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" th:field="*{firstName}" class="form-control">
