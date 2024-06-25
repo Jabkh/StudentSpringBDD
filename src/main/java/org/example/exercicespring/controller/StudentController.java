@@ -83,6 +83,6 @@ public class StudentController {
     public String searchStudent(@RequestParam("query") String query, Model model) {
         List<Student> students = studentService.getByName(query);
         model.addAttribute("students", students);
-        return "search_results"; // Assurez-vous que ce template existe
+        return "search_results";
     }
 }
