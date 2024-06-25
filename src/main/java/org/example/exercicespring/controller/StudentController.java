@@ -19,14 +19,14 @@ public class StudentController {
     }
 
     @GetMapping
-    public String list(Model model){
+    public String list(Model model) {
         List<Student> students = studentService.getAllStudents();
         model.addAttribute("students", students);
         return "students";
     }
 
     @GetMapping("/{studentId}")
-    public String detailPage(@PathVariable("studentId") String studentId, Model model){
+    public String detailPage(@PathVariable("studentId") String studentId, Model model) {
         try {
             UUID id = UUID.fromString(studentId);
             Student student = studentService.getStudentById(id);
@@ -36,21 +36,18 @@ public class StudentController {
             }
             return "redirect:/students";
         } catch (IllegalArgumentException e) {
-            // Handle invalid UUID format error
             return "redirect:/students";
         }
     }
 
     @GetMapping("/create")
-    public String showForm(Model model) {
-        Student student = new Student();
-        model.addAttribute("student", student);
+    public String showCreateForm(Model model) {
+        model.addAttribute("student", new Student());
         return "student_form";
     }
 
-
     @PostMapping
-    public String createStudent(@ModelAttribute Student student){
+    public String createStudent(@ModelAttribute Student student) {
         studentService.saveStudent(student);
         return "redirect:/students";
     }
@@ -65,14 +62,14 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @PutMapping("/update/{studentId}")
-    public String updateStudent(@PathVariable("studentId") UUID studentId, @ModelAttribute Student student){
+    @PostMapping("/update/{studentId}")
+    public String updateStudent(@PathVariable("studentId") UUID studentId, @ModelAttribute Student student) {
         studentService.updateStudent(studentId, student);
         return "redirect:/students";
     }
 
     @PostMapping("/delete/{studentId}")
-    public String deleteStudent(@PathVariable("studentId") UUID studentId){
+    public String deleteStudent(@PathVariable("studentId") UUID studentId) {
         studentService.deleteStudent(studentId);
         return "redirect:/students";
     }
@@ -83,9 +80,9 @@ public class StudentController {
     }
 
     @PostMapping("/search")
-    public String searchStudent(@RequestParam("query") String query, Model model){
-        List<Student> students = studentService.getByFirstName(query);
+    public String searchStudent(@RequestParam("query") String query, Model model) {
+        List<Student> students = studentService.getByName(query);
         model.addAttribute("students", students);
-        return "search_results";
+        return "search_results"; // Assurez-vous que ce template existe
     }
 }
