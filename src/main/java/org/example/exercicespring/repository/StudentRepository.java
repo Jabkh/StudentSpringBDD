@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, UUID> {
-
+ 
     List<Student> findByFirstNameContainingOrLastNameContaining(String firstName, String lastName);
 }

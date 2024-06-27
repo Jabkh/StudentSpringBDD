@@ -5,7 +5,8 @@ import org.example.exercicespring.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.validation.BindingResult;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +48,10 @@ public class StudentController {
     }
 
     @PostMapping
-    public String createStudent(@ModelAttribute Student student) {
+    public String createStudent(@Valid @ModelAttribute Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "student_form";
+        }
         studentService.saveStudent(student);
         return "redirect:/students";
     }
@@ -63,7 +67,11 @@ public class StudentController {
     }
 
     @PostMapping("/update/{studentId}")
-    public String updateStudent(@PathVariable("studentId") UUID studentId, @ModelAttribute Student student) {
+    public String updateStudent(@PathVariable("studentId") UUID studentId, @Valid @ModelAttribute Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "student_form";
+        }
+        student.setId(studentId);
         studentService.updateStudent(studentId, student);
         return "redirect:/students";
     }
